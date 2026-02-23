@@ -3,8 +3,11 @@
  * Plugin Name: WP Markdown Endpoint
  * Description: Exposes posts and pages as Markdown via .md URL suffix, Accept header negotiation, and auto-discovery links.
  * Version: 1.0.1
+ * Requires at least: 6.0
+ * Requires PHP: 8.0
  * Author: Birgit Pauli-Haack
- * License: GPL-2.0+
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: wp-markdown-endpoint
  */
 
