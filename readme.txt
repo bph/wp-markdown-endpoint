@@ -4,7 +4,7 @@ Tags: markdown, REST API, content negotiation, headless, API
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Title, publication date, author display name, canonical URL, tags (if any), cate
 
 == Changelog ==
 
+= 1.1.0 =
+* Add canonical `Link` header to Markdown responses, pointing back to the original HTML page.
+
 = 1.0.1 =
 * Initial public release.
 
@@ -68,6 +71,9 @@ Title, publication date, author display name, canonical URL, tags (if any), cate
 * Development release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds a canonical Link header to Markdown responses for better SEO and content attribution.
 
 = 1.0.1 =
 Initial release. No upgrade steps required.

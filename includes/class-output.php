@@ -82,6 +82,7 @@ class WPMD_Output {
 		status_header( 200 );
 		header( 'Content-Type: text/markdown; charset=utf-8' );
 		header( 'X-Content-Type-Options: nosniff' );
+		header( sprintf( 'Link: <%s>; rel="canonical"', esc_url_raw( get_permalink( $post ) ) ), false );
 
 		echo $markdown;
 		exit;

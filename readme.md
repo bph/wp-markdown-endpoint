@@ -8,6 +8,7 @@ A WordPress plugin that exposes posts and pages as Markdown via `.md` URL suffix
 - **`Accept` header negotiation** — send `Accept: text/markdown` to get a Markdown response without changing the URL
 - **`?format=md` query parameter** — an alternative way to request Markdown output
 - **YAML frontmatter** — every Markdown response includes structured metadata (title, date, author, URL, tags, categories, excerpt)
+- **Canonical `Link` header** — Markdown responses include a `Link: <…>; rel="canonical"` HTTP header pointing back to the original HTML page
 - **Auto-discovery link** — a `<link rel="alternate" type="text/markdown">` tag is injected into the HTML `<head>` of every singular post/page so clients can discover the Markdown URL automatically
 - **HTML-to-Markdown conversion** — converts Gutenberg block output (headings, paragraphs, lists, blockquotes, code blocks, images, links, bold, italic, strikethrough) to clean Markdown
 
