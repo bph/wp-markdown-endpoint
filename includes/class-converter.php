@@ -216,7 +216,9 @@ class WPMD_Converter {
 		$lines   = array();
 		$counter = 1;
 		foreach ( $items[1] as $item ) {
-			$text = trim( strip_tags( $item ) );
+			// Convert inline elements (links, bold, italic, etc.) before stripping remaining tags.
+			$text = $this->convert_inline_elements( $item );
+			$text = trim( $text );
 			if ( $marker === '1.' ) {
 				$lines[] = $counter . '. ' . $text;
 				$counter++;
