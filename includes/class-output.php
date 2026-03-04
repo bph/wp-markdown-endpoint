@@ -100,9 +100,18 @@ class WPMD_Output {
 		// Build frontmatter
 		$frontmatter = $this->build_frontmatter( $post );
 
-		// Convert content to Markdown
-		$content = apply_filters( 'the_content', $post->post_content );
-		$body    = $converter->convert( $content );
+		// Allow opting out of the_content filters (e.g. to skip page-builder output).
+		$use_raw = apply_filters( 'wpmd_use_raw_content', false, $post );
+		if ( $use_raw ) {
+			$content = $post->post_content;
+		} else {
+			$content = apply_filters( 'the_content', $post->post_content );
+		}
+
+		// Allow additional HTML pre-processing before conversion.
+		$content = apply_filters( 'wpmd_pre_convert_html', $content, $post );
+
+		$body = $converter->convert( $content );
 
 		return $frontmatter . "\n" . $body;
 	}
