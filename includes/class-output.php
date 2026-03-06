@@ -50,12 +50,12 @@ class WPMD_Output {
 	 */
 	public function serve_markdown() {
 		// Check for format=md query var, $_GET, or Accept header
-		$format       = get_query_var( 'format' );
+		$format = get_query_var( 'format' );
 		if ( empty( $format ) && isset( $_GET['format'] ) ) {
-			$format = $_GET['format'];
+			$format = sanitize_text_field( wp_unslash( $_GET['format'] ) );
 		}
-		$accept       = isset( $_SERVER['HTTP_ACCEPT'] ) ? $_SERVER['HTTP_ACCEPT'] : '';
-		$wants_md     = ( 'md' === $format ) || ( false !== strpos( $accept, 'text/markdown' ) );
+		$accept   = isset( $_SERVER['HTTP_ACCEPT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) ) : '';
+		$wants_md = ( 'md' === $format ) || ( false !== strpos( $accept, 'text/markdown' ) );
 
 		if ( ! $wants_md ) {
 			return;

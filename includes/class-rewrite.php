@@ -38,10 +38,10 @@ class WPMD_Rewrite {
 			return;
 		}
 
-		$request_uri = $_SERVER['REQUEST_URI'];
+		$request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 
 		// Parse URL to get path without query string
-		$parsed = parse_url( $request_uri );
+		$parsed = wp_parse_url( $request_uri );
 		$path   = isset( $parsed['path'] ) ? $parsed['path'] : '';
 
 		// Check if path ends with .md

@@ -54,11 +54,6 @@ The plugin uses the standard `the_content` filter before conversion, so any plug
 
 Title, publication date, author display name, canonical URL, tags (if any), categories (if any), and excerpt (if set).
 
-== Screenshots ==
-
-1. Requesting a post with the .md suffix returns Markdown with YAML frontmatter.
-2. The auto-discovery link in the HTML source of a post.
-
 == Changelog ==
 
 = 1.1.0 =
