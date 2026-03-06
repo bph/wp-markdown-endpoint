@@ -1,14 +1,15 @@
 <?php
 /**
  * Plugin Name: WP Markdown Endpoint
+ * Plugin URI: https://github.com/bph/wp-markdown-endpoint
  * Description: Exposes posts and pages as Markdown via .md URL suffix, Accept header negotiation, and auto-discovery links.
  * Version: 1.1.0
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author: Birgit Pauli-Haack
+ * Author URI: https://icodeforapurpose.com
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wp-markdown-endpoint
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
