@@ -1,5 +1,6 @@
 === WP Markdown Endpoint ===
-Contributors: bph
+Contributors: necroob
+Original Contributors: bph
 Tags: markdown, REST API, content negotiation, headless, API
 Requires at least: 6.0
 Tested up to: 6.9
@@ -48,7 +49,12 @@ The `.md` suffix requires pretty permalinks. The `?format=md` query parameter an
 
 = Can I filter or modify the Markdown output? =
 
-The plugin uses the standard `the_content` filter before conversion, so any plugin that hooks into content will affect the output. Additional filters specific to the Markdown output may be added in future versions.
+Yes. The plugin exposes several filter hooks:
+
+* `wpmd_enabled_post_ids` — restrict .md support to specific post/page/CPT IDs (empty array = all enabled)
+* `wpmd_cache_ttl` — control how long generated Markdown is cached (default: 86400 seconds / 24 hours)
+* `wpmd_use_raw_content` — return `true` to bypass `the_content` filters and use raw post content
+* `wpmd_pre_convert_html` — modify the HTML string just before it is converted to Markdown
 
 = What content is included in the frontmatter? =
 
@@ -60,6 +66,14 @@ Title, publication date, author display name, canonical URL, tags (if any), cate
 2. The auto-discovery link in the HTML source of a post.
 
 == Changelog ==
+
+= 1.1.2 =
+* Add transient caching for generated Markdown output, automatically invalidated on post save.
+* Add `wpmd_enabled_post_ids` filter to restrict .md support to specific post IDs.
+* Add `wpmd_cache_ttl` filter to control cache duration.
+
+= 1.1.1 =
+* Reduce excessive whitespace in Mardown output due to extra wrapping form custom blocks or other components.
 
 = 1.1.0 =
 * Add canonical `Link` header to Markdown responses, pointing back to the original HTML page.

@@ -123,4 +123,6 @@ GPL-2.0+. See [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/li
 
 ## Author
 
-Birgit Pauli-Haack
+George-Paul Cretu — [devmaverick.com](https://devmaverick.com)
+
+Based on the original work by Birgit Pauli-Haack.

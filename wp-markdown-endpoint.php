@@ -5,7 +5,9 @@
  * Version: 1.1.1
  * Requires at least: 6.0
  * Requires PHP: 8.0
- * Author: Birgit Pauli-Haack
+ * Author: George-Paul Cretu
+ * Author URI: https://devmaverick.com
+ * Original Author: Birgit Pauli-Haack
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: wp-markdown-endpoint
@@ -15,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPMD_VERSION', '1.1.1' );
+define( 'WPMD_VERSION', '1.1.2' );
 define( 'WPMD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once WPMD_PLUGIN_DIR . 'includes/class-rewrite.php';
