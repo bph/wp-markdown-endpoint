@@ -15,6 +15,16 @@ class WPMD_Output {
 	public function init() {
 		add_action( 'wp_head', array( $this, 'add_discovery_link' ), 3 );
 		add_action( 'template_redirect', array( $this, 'serve_markdown' ), 1 );
+		add_action( 'save_post', array( $this, 'invalidate_cache' ) );
+	}
+
+	/**
+	 * Delete the cached Markdown for a post when it is saved.
+	 *
+	 * @param int $post_id The post ID being saved.
+	 */
+	public function invalidate_cache( $post_id ) {
+		delete_transient( 'wpmd_md_' . $post_id );
 	}
 
 	/**
@@ -33,6 +43,10 @@ class WPMD_Output {
 		// Check if this is a public post type
 		$post_type_obj = get_post_type_object( $post->post_type );
 		if ( ! $post_type_obj || ! $post_type_obj->public ) {
+			return;
+		}
+
+		if ( ! $this->is_post_enabled( $post ) ) {
 			return;
 		}
 
@@ -76,6 +90,10 @@ class WPMD_Output {
 			return;
 		}
 
+		if ( ! $this->is_post_enabled( $post ) ) {
+			return;
+		}
+
 		$markdown = $this->generate_markdown( $post );
 
 		// Set headers
@@ -95,6 +113,12 @@ class WPMD_Output {
 	 * @return string Complete Markdown with frontmatter.
 	 */
 	private function generate_markdown( $post ) {
+		$cache_key = 'wpmd_md_' . $post->ID;
+		$cached    = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
 		$converter = new WPMD_Converter();
 
 		// Build frontmatter
@@ -113,7 +137,12 @@ class WPMD_Output {
 
 		$body = $converter->convert( $content );
 
-		return $frontmatter . "\n" . $body;
+		$markdown = $frontmatter . "\n" . $body;
+
+		$ttl = apply_filters( 'wpmd_cache_ttl', DAY_IN_SECONDS, $post );
+		set_transient( $cache_key, $markdown, $ttl );
+
+		return $markdown;
 	}
 
 	/**
@@ -185,6 +214,29 @@ class WPMD_Output {
 		}
 
 		return "{$key}: {$value}\n";
+	}
+
+	/**
+	 * Check whether the .md endpoint is enabled for a given post.
+	 *
+	 * Returns true by default (all posts enabled). Register a callback on the
+	 * `wpmd_enabled_post_ids` filter to restrict functionality to specific IDs:
+	 *
+	 *   add_filter( 'wpmd_enabled_post_ids', function( $ids ) {
+	 *       return [ 12, 34, 56 ];
+	 *   });
+	 *
+	 * @param WP_Post $post The post to check.
+	 * @return bool True if the endpoint should be active for this post.
+	 */
+	private function is_post_enabled( WP_Post $post ): bool {
+		// Default is an empty array. If no add_filter() callback is registered,
+		// apply_filters() returns this default — meaning all posts are enabled.
+		$allowed_ids = apply_filters( 'wpmd_enabled_post_ids', array(), $post );
+		if ( empty( $allowed_ids ) ) {
+			return true;
+		}
+		return in_array( $post->ID, (array) $allowed_ids, true );
 	}
 
 	/**
