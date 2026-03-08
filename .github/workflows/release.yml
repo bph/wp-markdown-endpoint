@@ -1,0 +1,32 @@
+name: Build and Release Plugin ZIP
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build plugin ZIP with correct folder name
+        run: |
+          mkdir -p build/wp-markdown-endpoint
+          rsync -av --exclude='.git' \
+                    --exclude='.github' \
+                    --exclude='build' \
+                    --exclude='*.md' \
+                    . build/wp-markdown-endpoint/
+          cd build
+          zip -r ../wp-markdown-endpoint.zip wp-markdown-endpoint/
+
+      - name: Create GitHub Release and upload ZIP
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wp-markdown-endpoint.zip
